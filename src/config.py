@@ -14,10 +14,10 @@ from sqlalchemy import (
 )
 
 PRODUCTION = getenv("PRODUCTION", False)
-IN_MEMORY_DATABASE = False if getenv("IN_MEMORY_DATABASE", False) == 'False' else True
+IN_MEMORY_DATABASE = False if getenv("IN_MEMORY_DATABASE", False) == "False" else True
 DATE_FORMAT = "%d-%m-%Y"
 
-DATABASE_PATH = '/storage.db' if IN_MEMORY_DATABASE is False else ''
+DATABASE_PATH = "/storage.db" if IN_MEMORY_DATABASE is False else ""
 engine = create_engine("sqlite://" + DATABASE_PATH, echo=False)
 
 meta = MetaData()

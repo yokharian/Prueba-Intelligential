@@ -13,7 +13,7 @@ def test_new_registry_between_fecha_range_clone_and_disable_highers_than_new():
         Pago(id_contrato=12, id_cliente=99, fecha=datetime(2021, 8, 6), monto=1280),
         Pago(id_contrato=12, id_cliente=99, fecha=datetime(2021, 8, 7), monto=4900),
     ]
-    print(f'adding {len(PAGOS_TO_INSERT)} registries at latest date')
+    print(f"adding {len(PAGOS_TO_INSERT)} registries at latest date")
     with Session(engine) as session:
         for _pago in PAGOS_TO_INSERT:
             Pago.add_registry(session, _pago)
@@ -24,12 +24,17 @@ def test_new_registry_between_fecha_range_clone_and_disable_highers_than_new():
             print(row)
         assert len(table) == 3
 
-    print('adding one registry in between range of fecha')
+    print("adding one registry in between range of fecha")
     with Session(engine) as session:
-        Pago.add_registry(session, Pago(id_contrato=12, id_cliente=99, fecha=datetime(2021, 8, 4), monto=900))
+        Pago.add_registry(
+            session,
+            Pago(id_contrato=12, id_cliente=99, fecha=datetime(2021, 8, 4), monto=900),
+        )
         session.commit()
 
-        table = list(session.execute(select(Pago).order_by(Pago.activo,Pago.id_pago)).scalars())
+        table = list(
+            session.execute(select(Pago).order_by(Pago.activo, Pago.id_pago)).scalars()
+        )
         for row in table:
             print(row)
         assert len(table) == 7

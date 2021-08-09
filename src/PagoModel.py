@@ -27,13 +27,19 @@ class Pago(Base):
     # Identificador del pago
     id_pago = Column(Integer, primary_key=True)
 
-    id_contrato = Column(Integer, nullable=False, primary_key=True)  # Identificador del contrato
-    id_cliente = Column(Integer, nullable=False, primary_key=True)  # Identificador del cliente
+    id_contrato = Column(
+        Integer, nullable=False, primary_key=True
+    )  # Identificador del contrato
+    id_cliente = Column(
+        Integer, nullable=False, primary_key=True
+    )  # Identificador del cliente
     fecha = Column(DateTime, nullable=False, primary_key=True)  # Fecha de pago
     monto = Column(Float, nullable=False, primary_key=True)  # Monto del pago
     # true si el registro está vigente, false si el registro ya no es válido (eliminado lógico)
     activo = Column(Boolean, primary_key=True, default=True)
-    fecha_registro = Column(DateTime, default=datetime.now())  # Fecha de registro del pago
+    fecha_registro = Column(
+        DateTime, default=datetime.now()
+    )  # Fecha de registro del pago
 
     @classmethod
     def select_latest_pagos(
