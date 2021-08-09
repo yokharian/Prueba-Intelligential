@@ -1,5 +1,7 @@
 # Prueba [Intelligential](https://www.intelligential.tech/)
 
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"/></a>
+
 ## Los entregables serían:
 
 1. Diagrama entidad-relación del problema. Lo puedes hacer a mano y tomarle foto o si prefieres usar alguna herramienta, adelante.
