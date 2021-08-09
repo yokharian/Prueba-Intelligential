@@ -1,6 +1,19 @@
 from datetime import datetime
 
 import click
+from sqlalchemy.orm import Session
+
+from src.PagoModel import Pago
+from src.config import engine
+
+
+def dag_add_pago(id_contrato: int, id_cliente: int, monto: int, fecha: datetime):
+    new_registry = Pago(
+        id_contrato=id_contrato, id_cliente=id_cliente, monto=monto, fecha=fecha
+    )
+    with Session(engine) as session:
+        Pago.add_registry(session, new_registry)
+        session.commit()
 
 
 @click.command()
@@ -14,7 +27,9 @@ import click
     help="fecha de pago",
 )
 def registrar_pago(id_contrato: int, id_cliente: int, monto: int, fecha: datetime):
-    print(id_contrato, id_cliente, monto, fecha)
+    dag_add_pago(
+        id_contrato=id_contrato, id_cliente=id_cliente, monto=monto, fecha=fecha
+    )
 
 
 if __name__ == "__main__":
