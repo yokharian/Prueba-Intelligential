@@ -31,3 +31,9 @@ python src/main.py add_pago --id_contrato=12 --id_cliente=99 --fecha="2021-8-5" 
 # for more info execute
 python src/main.py add_pago --help
 ```
+
+<br>
+
+# ENTITY-RELATIONSHIP DIAGRAM
+
+![diagram](diagram.png)
