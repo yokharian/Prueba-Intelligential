@@ -16,7 +16,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import Select
 
-from .config import DATE_FORMAT
+from config import DATE_FORMAT
 
 Base = declarative_base()
 

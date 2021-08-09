@@ -18,23 +18,29 @@ def test_new_registry_between_fecha_range_clone_and_disable_highers_than_new():
         for _pago in PAGOS_TO_INSERT:
             Pago.add_registry(session, _pago)
             session.commit()
-        table = session.execute(select(Pago)).scalars().all()
 
-        for row in table:
+        table = (
+            session.execute(select(Pago).order_by(Pago.activo, Pago.id_pago))
+            .scalars()
+
+        )
+        for row in table.all():
             print(row)
         assert len(table) == 3
 
     print("adding one registry in between range of fecha")
     with Session(engine) as session:
-        Pago.add_registry(
-            session,
-            Pago(id_contrato=12, id_cliente=99, fecha=datetime(2021, 8, 4), monto=900),
+        second_registry = Pago(
+            id_contrato=12, id_cliente=99, fecha=datetime(2021, 8, 4), monto=900
         )
+        Pago.add_registry(session, second_registry)
         session.commit()
 
-        table = list(
-            session.execute(select(Pago).order_by(Pago.activo, Pago.id_pago)).scalars()
+        # show full table
+        table = (
+            session.execute(select(Pago).order_by(Pago.activo, Pago.id_pago))
+            .scalars()
         )
-        for row in table:
+        for row in table.all():
             print(row)
         assert len(table) == 7
