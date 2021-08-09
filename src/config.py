@@ -1,4 +1,6 @@
 """create in-memory database"""
+from os import getenv
+
 from sqlalchemy import (
     Table,
     Column,
@@ -8,13 +10,17 @@ from sqlalchemy import (
     Float,
     Boolean,
     create_engine,
-    MetaData, )
+    MetaData,
+)
 
-engine = create_engine("sqlite://", echo=False)  # in-memory database
-meta = MetaData()
-
+PRODUCTION = getenv("PRODUCTION", False)
+IN_MEMORY_DATABASE = False if getenv("IN_MEMORY_DATABASE", False) == 'False' else True
 DATE_FORMAT = "%d-%m-%Y"
 
+DATABASE_PATH = '/storage.db' if IN_MEMORY_DATABASE is False else ''
+engine = create_engine("sqlite://" + DATABASE_PATH, echo=False)
+
+meta = MetaData()
 pago = Table(
     "PAGO",
     meta,
@@ -28,9 +34,8 @@ pago = Table(
     & typeof(monto) = "float" & monto > 0""",
         name="is a natural number",
     ),
-
-    Column("fecha", DateTime, nullable=False,primary_key=True),
-    Column("monto", Float, nullable=False,primary_key=True),
+    Column("fecha", DateTime, nullable=False, primary_key=True),
+    Column("monto", Float, nullable=False, primary_key=True),
     Column("fecha_registro", DateTime, nullable=False),
-    Column("activo", Boolean, nullable=False,primary_key=True),
+    Column("activo", Boolean, nullable=False, primary_key=True),
 ).create(engine)
