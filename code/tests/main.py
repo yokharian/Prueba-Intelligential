@@ -1,12 +1,10 @@
-import pytest
-
 from datetime import datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from PagoModel import Pago
-from config import engine
+from code.PagoModel import Pago
+from code.config import engine
 
 if __name__ == "__main__":
     PAGOS_TO_INSERT = [
